@@ -1,0 +1,23 @@
+{% extends 'vopros/base.html' %}
+{% block content %}
+
+<div class = "quetions">
+    <div class = "tag-in-quetion"><h4>{{quetion.tag_name}}</h4> </div>
+    <div ><h4>Изменить</h4> </div>
+<table>
+    <tr>
+        <td class = "left-td">
+        <ul>
+            <li><h3>{{tittle}}</h3> </li>
+            <li> <p>{{quetion.content}}</p></li>
+            <li>{{time}} </li>
+        </ul> 
+        </td>
+        <td>  {% if quetion.photo %}<a href="{{ quetion.photo.url }}"><div class = "contein"><img class = 'photo' src="{{ quetion.photo.url }}"></div></a>
+            {% endif %}
+        </td>    
+    </tr>
+</table>    
+</div>
+
+{% endblock %}

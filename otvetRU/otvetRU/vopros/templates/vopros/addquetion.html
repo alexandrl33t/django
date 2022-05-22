@@ -1,0 +1,16 @@
+{% extends 'vopros/base.html' %}
+{% block content %}
+
+<div class = "quetions">
+<form action="{% url 'createnew' %}" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<div>{{form.non_field_errors}}</div>
+<ul class="addquetion-list">
+    <li><p><b><label>{{form.tittle.label}}</label></b></p>{{form.tittle}}</li>
+    <li><p><label>{{form.content.label}}</label></p>{{form.content}}</li>
+    <li><label>Категории</label>{{form.tag_name}}{{form.photo}}<label for = "photo">Загрузить фото</label><button type="submit">Добавить</button></li>
+</ul>
+
+</form>
+</div>
+{% endblock %}

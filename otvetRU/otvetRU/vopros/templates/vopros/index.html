@@ -1,0 +1,24 @@
+{% extends 'vopros/base.html' %}
+
+{% block content %}
+<div id="main-page-right">
+<h1 id = "glav">{{tittle}}</h1>
+<p>
+<ul class="quetions-list">
+    {% for q in quetions %}
+    <div class = "quetions">
+    <a href="{{q.get_absolute_url}}">
+    <li><table>
+        <tr><h3>{{q.tittle}}</h3></tr>
+        <tr><p>{{q.content}}</p></tr>
+        <tr><div>{{q.tag_name}}</div></tr>
+        <tr><div>{{q.time_create|date:"D d M Y" }}</div></tr>
+        </table>     
+    </li></a> 
+    </div> 
+
+    {% endfor %}
+</ul>
+</p>
+</div>
+{% endblock %}

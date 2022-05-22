@@ -1,0 +1,1 @@
+default_app_config = 'projectname.apps.articles.apps.ArticlesConfig'

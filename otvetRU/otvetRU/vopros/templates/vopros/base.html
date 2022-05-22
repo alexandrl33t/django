@@ -1,0 +1,94 @@
+{% load static %}
+{% load vopros_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{tittle}}</title>
+	<link type="text/css" href="{% static 'vopros/css/style.css' %}" rel="stylesheet" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="shortcut icon" href="{% static 'vopros/images/main.png' %}" type="image/x-icon"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<table class="table-content" border=0 cellpadding="0" cellspacing="0">
+<tr>
+<!-- Sidebar слева -->
+	<td valign="top" class="left-chapters">
+    {% get_categories as cats%}
+	<ul>
+    {% if request.user.is_authenticated %}
+    <li class = "loginbtn">Привет, {{ user.username }}!</li>
+    <a href="{% url 'logout' %}"><li class = "loginbtn">Выйти</li></a>
+    {% else %}
+    <a href="{% url 'register' %}"><li class = "loginbtn">Регистрация</li></a>
+    <a href="{% url 'login' %}"><li class = "loginbtn">Войти</li></a>
+    {% endif %}
+    <li id = "homebtn"><a href="{% url 'home' %}"><h2>На Главную</h2></a></li>
+    <li id = "askbtn">
+      <table><tr>
+          <td><div id = "logoup"></div></td>
+          {% if request.user.is_authenticated %}
+          <td><a href="{% url 'addquetion' %}">Задать вопрос</a></td>
+          {% else %}
+          <td><a href="{% url 'errorquetion' %}">Задать вопрос</a></td>
+          {% endif %}
+        </tr>
+      </table>
+    </li>
+		<li id="all-cats">Все категории</li>
+    {% for m in cats %}
+		<li><a href="{{m.get_absolute_url}}">{{m.tag_name}}</a></li>
+    {% endfor %}
+	</ul>
+  </td>
+
+<td valign="top" class="content">
+
+<!-- Блок контента -->
+	<div>
+{% block content %}
+{% endblock %}
+{% if page_obj.has_other_pages %}
+<nav class="list-pages">
+    <ul>
+{% if page_obj.has_previous %}
+<li class="page-num">
+	<a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+</li>
+{% endif %}
+
+        {% for p in paginator.page_range %}
+		{% if page_obj.number == p %}
+        <li class="page-num page-num-selected">{{ p }}</li>
+		{% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2  %}
+        <li class="page-num">
+            <a href="?page={{ p }}">{{ p }}</a>
+        </li>
+		{% endif %}
+        {% endfor %}
+
+{% if page_obj.has_next %}
+<li class="page-num">
+	<a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+</li>
+{% endif %}
+
+    </ul>
+</nav>
+{% endif %}
+	</div>
+<!-- Конец блока контента -->
+
+</td></tr>
+<tr>
+  <!-- Footer -->
+  <div id="footer">
+    <p>&reg; Made by Alexandr Maximov</p>
+  </div>
+<!-- Конец footer'а и страницы -->
+</tr>
+</table>
+
+</body>
+</html>
